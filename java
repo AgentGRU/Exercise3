@@ -39,6 +39,7 @@ public class Main {
                     String HMAC = org.apache.commons.
                             codec.digest.DigestUtils.
                             sha256Hex(hex);
+                    for (;;) {
                     System.out.println("HMAC: " + Key.generate());
                     System.out.println("Available moves:");
                     for (int i = 1; i < c+1; i++) {
@@ -47,30 +48,33 @@ public class Main {
                     System.out.println("0 - exit");
                     System.out.print("Enter your move: ");
                     int t = y.nextInt();
-                    if (t == 0) {}
-                        else{
-                    System.out.println("Your move: " + args[t - 1]);
-                    System.out.println("Computer move: " + args[h]);
-                    Integer[] turns1 = new Integer[c];
-                    for (int i = 0; i < c; i++) {
-                        turns1[i] = i;
+                    if (t >= c || t < 0) continue;
+                    if (t == 0) break;
+                        else {
+                        System.out.println("Your move: " + args[t - 1]);
+                        System.out.println("Computer move: " + args[h]);
+                        Integer[] turns1 = new Integer[c];
+                        for (int i = 0; i < c; i++) {
+                            turns1[i] = i;
+                        }
+                        Integer[] turns = new Integer[c * 2];
+                        Integer[] turns2 = turns1.clone();
+                        System.arraycopy(turns1, 0, turns, 0, (c));
+                        System.arraycopy(turns2, 0, turns, (c), (c));
+                        Integer[] turns3 = new Integer[c / 2];
+                        for (int i = 0; i < c / 2; i++) {
+                            turns3[i] = turns[t + 1 + i];
+                        }
+                        if (Arrays.asList(turns3).contains(h)) {
+                            System.out.println("You lose!");
+                        } else if (t == h + 1) {
+                            System.out.println("Tie!");
+                        } else {
+                            System.out.println("You win!");
+                        }
+                        System.out.println("HMAC key: " + HMAC + '\n');
+                        break;
                     }
-                    Integer[] turns = new Integer[c * 2];
-                    Integer[] turns2 = turns1.clone();
-                    System.arraycopy(turns1, 0, turns, 0, (c));
-                    System.arraycopy(turns2, 0, turns, (c), (c));
-                    Integer[] turns3 = new Integer[c / 2];
-                    for (int i = 0; i < c / 2; i++) {
-                        turns3[i] = turns[t + 1 + i];
-                    }
-                    if (Arrays.asList(turns3).contains(h)) {
-                        System.out.println("You lose!");
-                    } else if (t == h + 1) {
-                        System.out.println("Tie!");
-                    } else {
-                        System.out.println("You win!");
-                    }
-                    System.out.println("HMAC key: " + HMAC + '\n');
                 }
             } else {
                 System.out.println("Invalid number of parametrs");
